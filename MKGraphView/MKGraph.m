@@ -14,6 +14,17 @@
     
     if (self == [super initWithFrame:frame]){
         
+        
+        UIView *viewForHorizontalAxis = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, 1.0)];
+        viewForHorizontalAxis.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.8];
+        [self addSubview:viewForHorizontalAxis];
+        
+        
+        UIView *viewForVerticalAxis = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 1.0, frame.size.height)];
+        viewForVerticalAxis.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.8];
+        [self addSubview:viewForVerticalAxis];
+
+        
         xRatioFactor = 1.0;
         yRatioFactor = 1.0;
         _strokeWidth = 1.0;
@@ -25,21 +36,7 @@
 
 -(void)drawGraph{
     
-    if (_maxValueX == 0){
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please set a max value for X- axis" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:okAction];
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:true completion:nil];
-        
-    }else if (_maxValueY == 0){
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please set a max value for Y- axis" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:okAction];
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alert animated:true completion:nil];
-        
-    }else if (_arrayForValues.count <= 0){
+   if (_arrayForValues.count <= 0){
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"No values found for plotting graph" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
@@ -73,7 +70,6 @@
         }
         
         xRatioFactor = _maxValueX/self.frame.size.width < 1 ? 1 : _maxValueX/self.frame.size.width;
-        
         yRatioFactor = _maxValueY/self.frame.size.height < 1 ? 1 : _maxValueY/self.frame.size.height;
         
         UIBezierPath *graphPath = [UIBezierPath bezierPath];
@@ -91,11 +87,19 @@
         CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
         [shapeLayer setFrame: self.bounds];
         shapeLayer.lineWidth = _strokeWidth;
-        [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
+        [shapeLayer setFillColor:[[_strokeColor colorWithAlphaComponent:0.3]CGColor]];
         [shapeLayer setPath: [graphPath CGPath]];
         [shapeLayer setStrokeColor:[_strokeColor CGColor]];
         [shapeLayer setMasksToBounds:YES];
         [self.layer addSublayer:shapeLayer];
+        
+        CABasicAnimation *stroke = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        stroke.fromValue = @(0);
+        stroke.toValue = @(1);
+        stroke.repeatCount = 1;
+        stroke.duration = 2.0f;
+        stroke.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        [shapeLayer addAnimation:stroke forKey:nil];
         
         self.transform = CGAffineTransformMakeScale(1, -1);
     }

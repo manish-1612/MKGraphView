@@ -19,11 +19,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     
-    MKGraph *graph = [[MKGraph alloc]initWithFrame:CGRectMake(0.0, 100.0, self.view.frame.size.width, 200.0)]  ;
-    graph.backgroundColor = [UIColor colorWithWhite:0.1 alpha:0.75];
-    graph.maxValueX = 100.0;
-    graph.maxValueY = 100.0;
-    graph.strokeWidth = 1.0;
+    MKGraph *graph = [[MKGraph alloc]initWithFrame:CGRectMake(10.0, 100.0, self.view.frame.size.width - 20.0, 200.0)]  ;
+    graph.backgroundColor = [UIColor clearColor];
+    graph.strokeWidth = 2.0;
     graph.strokeColor = [UIColor orangeColor];
     graph.arrayForValues = [[NSMutableArray alloc]init];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(0, 0)]];
