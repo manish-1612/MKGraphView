@@ -14,7 +14,6 @@
     
     if (self == [super initWithFrame:frame]){
         
-        
         UIView *viewForHorizontalAxis = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, 1.0)];
         viewForHorizontalAxis.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.8];
         [self addSubview:viewForHorizontalAxis];
@@ -83,7 +82,6 @@
             [graphPath addLineToPoint:newPoint];
         }
         
-        
         CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
         [shapeLayer setFrame: self.bounds];
         shapeLayer.lineWidth = _strokeWidth;
@@ -97,7 +95,7 @@
         stroke.fromValue = @(0);
         stroke.toValue = @(1);
         stroke.repeatCount = 1;
-        stroke.duration = 2.0f;
+        stroke.duration = 1.0f;
         stroke.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
         [shapeLayer addAnimation:stroke forKey:nil];
         
