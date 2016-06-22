@@ -21,6 +21,8 @@
 
 @property (nonatomic) CGFloat strokeWidth;
 @property (nonatomic, strong) UIColor *strokeColor;
+@property (nonatomic) BOOL allowAnimation;
+@property (nonatomic) BOOL isSolidStroke;
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)drawGraph;

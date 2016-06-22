@@ -14,19 +14,22 @@
     
     if (self == [super initWithFrame:frame]){
         
+        //creating x- axis
         UIView *viewForHorizontalAxis = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, 1.0)];
         viewForHorizontalAxis.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.8];
         [self addSubview:viewForHorizontalAxis];
         
-        
+        //creating y-axis
         UIView *viewForVerticalAxis = [[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 1.0, frame.size.height)];
         viewForVerticalAxis.backgroundColor = [UIColor colorWithWhite:0.3 alpha:0.8];
         [self addSubview:viewForVerticalAxis];
 
-        
+        //initializing graph constraints
         xRatioFactor = 1.0;
         yRatioFactor = 1.0;
         _strokeWidth = 1.0;
+        _allowAnimation = false;
+        _isSolidStroke = true;
         _strokeColor = [UIColor blueColor];
     }
     
@@ -35,6 +38,7 @@
 
 -(void)drawGraph{
     
+    //checking if coordinates are there or not
    if (_arrayForValues.count <= 0){
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"No values found for plotting graph" preferredStyle:UIAlertControllerStyleAlert];
@@ -44,6 +48,16 @@
         
     }else{
         
+        //============================================================================================//
+        //1. Checking for the max X value and max Y value in the graph.
+        //2. Reassign variables _maxValueX and _maxValueY in case they are smaller than above values
+        //3. Finding the xRatioFactor and yRatioFactor to recalculate points in case the _maxValueX and _maxValueY are greater than frame bounds
+        //4. Create a UIBezierPath using those recalculated points
+        //5. Adding the path in a CAShapeLayer for creating graph
+        //6. Transformation of layer to readjust layer coordinates
+        //============================================================================================//
+        
+        //Checking for the max X value and max Y value in the graph.
         CGFloat yMax = 0;
         CGFloat xMax = 0;
         
@@ -60,6 +74,7 @@
             }
         }
         
+        //Reassign variables _maxValueX and _maxValueY in case they are smaller than above values
         if (yMax > _maxValueY){
             _maxValueY = yMax;
         }
@@ -68,9 +83,11 @@
             _maxValueX = xMax;
         }
         
+        //Finding the xRatioFactor and yRatioFactor to recalculate points in case the _maxValueX and _maxValueY are greater than frame bounds
         xRatioFactor = _maxValueX/self.frame.size.width < 1 ? 1 : _maxValueX/self.frame.size.width;
         yRatioFactor = _maxValueY/self.frame.size.height < 1 ? 1 : _maxValueY/self.frame.size.height;
         
+        //Create a UIBezierPath using those recalculated points
         UIBezierPath *graphPath = [UIBezierPath bezierPath];
         [graphPath moveToPoint:CGPointMake(0, 0)];
         
@@ -82,29 +99,45 @@
             [graphPath addLineToPoint:newPoint];
         }
         
+        //Adding the path in a CAShapeLayer for creating graph
         CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
         [shapeLayer setFrame: self.bounds];
         shapeLayer.lineWidth = _strokeWidth;
+        
+        if (!_isSolidStroke){
+            shapeLayer.lineDashPattern = [NSArray arrayWithObjects:[NSNumber numberWithInteger:6],[NSNumber numberWithInteger:4], nil];
+        }
+        
+        
+        
+        
         [shapeLayer setFillColor:[[_strokeColor colorWithAlphaComponent:0.3]CGColor]];
         [shapeLayer setPath: [graphPath CGPath]];
         [shapeLayer setStrokeColor:[_strokeColor CGColor]];
         [shapeLayer setMasksToBounds:YES];
         [self.layer addSublayer:shapeLayer];
         
-        CABasicAnimation *stroke = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-        stroke.fromValue = @(0);
-        stroke.toValue = @(1);
-        stroke.repeatCount = 1;
-        stroke.duration = 1.0f;
-        stroke.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-        [shapeLayer addAnimation:stroke forKey:nil];
-        
+        //Transformation of layer to readjust layer coordinates
         self.transform = CGAffineTransformMakeScale(1, -1);
-    }
-    
-    
 
+        if(_allowAnimation){
+            [self addAnimationToShapeLayer:shapeLayer];
+        }
+    }
+}
+
+-(void)addAnimationToShapeLayer:(CAShapeLayer *)layer{
     
+    //provide stroke animation to graph
+    CABasicAnimation *stroke = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    stroke.fromValue = @(0);
+    stroke.toValue = @(1);
+    stroke.repeatCount = 1;
+    stroke.duration = 1.0f;
+    stroke.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    [layer addAnimation:stroke forKey:nil];
 
 }
+
+
 @end

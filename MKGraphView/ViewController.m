@@ -23,6 +23,8 @@
     graph.backgroundColor = [UIColor clearColor];
     graph.strokeWidth = 2.0;
     graph.strokeColor = [UIColor orangeColor];
+    graph.allowAnimation = true;
+    graph.isSolidStroke = false;
     graph.arrayForValues = [[NSMutableArray alloc]init];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(0, 0)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(23, 23)]];
