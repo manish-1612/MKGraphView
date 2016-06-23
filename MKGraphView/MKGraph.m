@@ -114,12 +114,11 @@
         [shapeLayer setStrokeColor:[_strokeColor CGColor]];
         [shapeLayer setMasksToBounds:YES];
         [self.layer addSublayer:shapeLayer];
-        
+
         
         if (_showValuePointsOnGraph){
             [self addBoundaryPointToGraph];
         }
-        
         
         //Transformation of layer to readjust layer coordinates
         self.transform = CGAffineTransformMakeScale(1, -1);
@@ -147,7 +146,6 @@
 -(void)addBoundaryPointToGraph{
     
     //Create a UIBezierPath using those recalculated points
-    
     for (int i = 0; i < _arrayForValues.count; i++ ){
         
         UIBezierPath *graphPath = [UIBezierPath bezierPath];
@@ -157,7 +155,7 @@
         CGPoint newPoint = CGPointMake(point.x/xRatioFactor, point.y/yRatioFactor);
         
         [graphPath moveToPoint:newPoint];
-        [graphPath addArcWithCenter:newPoint radius:2.0 startAngle:0.0 endAngle:2  * M_PI clockwise:true];
+        [graphPath addArcWithCenter:newPoint radius:3.0 startAngle:0.0 endAngle:2  * M_PI clockwise:true];
         
         CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
         [shapeLayer setFrame: self.bounds];
@@ -167,13 +165,7 @@
         [shapeLayer setStrokeColor:[_strokeColor CGColor]];
         [shapeLayer setMasksToBounds:YES];
         [self.layer addSublayer:shapeLayer];
-
     }
-    
-    
-    
-    //Adding the path in a CAShapeLayer for creating graph
-    
     
 }
 

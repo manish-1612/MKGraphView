@@ -25,6 +25,7 @@
     graph.strokeColor = [UIColor orangeColor];
     graph.allowAnimation = true;
     graph.isSolidStroke = false;
+    graph.showValuePointsOnGraph = true;
     graph.arrayForValues = [[NSMutableArray alloc]init];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(0, 0)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(23, 23)]];
