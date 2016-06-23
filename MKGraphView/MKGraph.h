@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIColor *strokeColor;
 @property (nonatomic) BOOL allowAnimation;
 @property (nonatomic) BOOL isSolidStroke;
+@property (nonatomic) BOOL showValuePointsOnGraph;
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)drawGraph;

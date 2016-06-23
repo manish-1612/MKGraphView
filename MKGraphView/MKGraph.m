@@ -29,6 +29,7 @@
         yRatioFactor = 1.0;
         _strokeWidth = 1.0;
         _allowAnimation = false;
+        _showValuePointsOnGraph = false;
         _isSolidStroke = true;
         _strokeColor = [UIColor blueColor];
     }
@@ -108,14 +109,17 @@
             shapeLayer.lineDashPattern = [NSArray arrayWithObjects:[NSNumber numberWithInteger:6],[NSNumber numberWithInteger:4], nil];
         }
         
-        
-        
-        
         [shapeLayer setFillColor:[[_strokeColor colorWithAlphaComponent:0.3]CGColor]];
         [shapeLayer setPath: [graphPath CGPath]];
         [shapeLayer setStrokeColor:[_strokeColor CGColor]];
         [shapeLayer setMasksToBounds:YES];
         [self.layer addSublayer:shapeLayer];
+        
+        
+        if (_showValuePointsOnGraph){
+            [self addBoundaryPointToGraph];
+        }
+        
         
         //Transformation of layer to readjust layer coordinates
         self.transform = CGAffineTransformMakeScale(1, -1);
@@ -139,5 +143,38 @@
 
 }
 
+
+-(void)addBoundaryPointToGraph{
+    
+    //Create a UIBezierPath using those recalculated points
+    
+    for (int i = 0; i < _arrayForValues.count; i++ ){
+        
+        UIBezierPath *graphPath = [UIBezierPath bezierPath];
+
+        NSValue *pointValue = _arrayForValues[i];
+        CGPoint point = [pointValue CGPointValue];
+        CGPoint newPoint = CGPointMake(point.x/xRatioFactor, point.y/yRatioFactor);
+        
+        [graphPath moveToPoint:newPoint];
+        [graphPath addArcWithCenter:newPoint radius:2.0 startAngle:0.0 endAngle:2  * M_PI clockwise:true];
+        
+        CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
+        [shapeLayer setFrame: self.bounds];
+        shapeLayer.lineWidth = 1.0;
+        [shapeLayer setFillColor:[_strokeColor CGColor]];
+        [shapeLayer setPath: [graphPath CGPath]];
+        [shapeLayer setStrokeColor:[_strokeColor CGColor]];
+        [shapeLayer setMasksToBounds:YES];
+        [self.layer addSublayer:shapeLayer];
+
+    }
+    
+    
+    
+    //Adding the path in a CAShapeLayer for creating graph
+    
+    
+}
 
 @end
