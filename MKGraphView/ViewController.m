@@ -26,15 +26,16 @@
     graph.allowAnimation = true;
     graph.isSolidStroke = false;
     graph.showValuePointsOnGraph = true;
+    graph.setFillColor = true;
     graph.arrayForValues = [[NSMutableArray alloc]init];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(0, 0)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(23, 23)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(56, 106)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(106, 62)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(173, 98)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(238, 105)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(290, 150)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(310, 155)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(143, 98)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(189, 105)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(240, 150)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(270, 155)]];
 
     [self.view addSubview:graph];
 

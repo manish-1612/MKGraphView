@@ -3,7 +3,7 @@
 //  MKGraphView
 //
 //  Created by Manish Kumar on 22/06/16.
-//  Copyright © 2016 Innofied Solutions Pvt. Ltd. All rights reserved.
+//  Copyright © 2016 Manish Kumar All rights reserved.
 //
 
 #import "MKGraph.h"
@@ -29,6 +29,7 @@
         yRatioFactor = 1.0;
         _strokeWidth = 1.0;
         _allowAnimation = false;
+        _setFillColor = false;
         _showValuePointsOnGraph = false;
         _isSolidStroke = true;
         _strokeColor = [UIColor blueColor];
@@ -109,7 +110,11 @@
             shapeLayer.lineDashPattern = [NSArray arrayWithObjects:[NSNumber numberWithInteger:6],[NSNumber numberWithInteger:4], nil];
         }
         
-        [shapeLayer setFillColor:[[_strokeColor colorWithAlphaComponent:0.3]CGColor]];
+        if (_setFillColor){
+            [self setFillColorInGraph];
+        }
+        
+        [shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
         [shapeLayer setPath: [graphPath CGPath]];
         [shapeLayer setStrokeColor:[_strokeColor CGColor]];
         [shapeLayer setMasksToBounds:YES];
@@ -120,12 +125,13 @@
             [self addBoundaryPointToGraph];
         }
         
-        //Transformation of layer to readjust layer coordinates
-        self.transform = CGAffineTransformMakeScale(1, -1);
-
         if(_allowAnimation){
             [self addAnimationToShapeLayer:shapeLayer];
         }
+        
+        //Transformation of layer to readjust layer coordinates
+        self.transform = CGAffineTransformMakeScale(1, -1);
+
     }
 }
 
@@ -167,6 +173,50 @@
         [self.layer addSublayer:shapeLayer];
     }
     
+}
+
+
+-(void)setFillColorInGraph{
+    
+    
+    UIBezierPath *graphPathFull = [UIBezierPath bezierPath];
+    [graphPathFull moveToPoint:CGPointMake(0, 0)];
+    
+    for (int i = 0; i < _arrayForValues.count; i++ ){
+        
+        NSValue *pointValue = _arrayForValues[i];
+        CGPoint point = [pointValue CGPointValue];
+        CGPoint newPoint = CGPointMake(point.x/xRatioFactor, point.y/yRatioFactor);
+        [graphPathFull addLineToPoint:newPoint];
+    }
+
+    
+    NSValue *pointValue = [_arrayForValues lastObject];
+    CGPoint point = [pointValue CGPointValue];
+    [graphPathFull addLineToPoint:CGPointMake(point.x, 0)];
+    [graphPathFull closePath];
+
+    
+    CAShapeLayer *shapeLayerFull = [[CAShapeLayer alloc] init];
+    [shapeLayerFull setFrame: self.bounds];
+    shapeLayerFull.lineWidth = 0.0;
+    [shapeLayerFull setFillColor:[[_strokeColor colorWithAlphaComponent:0.3]CGColor]];
+    [shapeLayerFull setPath: [graphPathFull CGPath]];
+    [shapeLayerFull setStrokeColor:[[UIColor clearColor] CGColor]];
+    [shapeLayerFull setMasksToBounds:YES];
+    [self.layer addSublayer:shapeLayerFull];
+    
+    
+    if(_allowAnimation){
+        CABasicAnimation *fillColorAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+        fillColorAnimation.duration = 1.0f;
+        fillColorAnimation.fromValue = (id)[[UIColor clearColor] CGColor];
+        fillColorAnimation.toValue = (id)[[_strokeColor colorWithAlphaComponent:0.3]CGColor];
+        fillColorAnimation.repeatCount = 0;
+        fillColorAnimation.autoreverses = false;
+        [shapeLayerFull addAnimation:fillColorAnimation forKey:@"fillColor"];
+    }
+
 }
 
 @end
