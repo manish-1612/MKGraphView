@@ -35,6 +35,13 @@
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(238, 105)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(290, 150)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(310, 155)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(400, 15)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(510, 188)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(550, 201)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(625, 325)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(701, 67)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(800, 89)]];
+    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(805, 222)]];
 
     [self.view addSubview:graph];
 

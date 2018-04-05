@@ -84,6 +84,12 @@
             _maxValueX = xMax;
         }
         
+        //increasing _maxValueX and _maxValueY for providing padding to max X and max Y value graph points
+        _maxValueY += 10;
+        _maxValueX += 10;
+
+        
+        
         //Finding the xRatioFactor and yRatioFactor to recalculate points in case the _maxValueX and _maxValueY are greater than frame bounds
         xRatioFactor = _maxValueX/self.frame.size.width < 1 ? 1 : _maxValueX/self.frame.size.width;
         yRatioFactor = _maxValueY/self.frame.size.height < 1 ? 1 : _maxValueY/self.frame.size.height;
@@ -99,6 +105,7 @@
             CGPoint newPoint = CGPointMake(point.x/xRatioFactor, point.y/yRatioFactor);
             [graphPath addLineToPoint:newPoint];
         }
+         
         
         //Adding the path in a CAShapeLayer for creating graph
         CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
