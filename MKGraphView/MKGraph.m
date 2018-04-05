@@ -152,6 +152,14 @@
     stroke.duration = 1.0f;
     stroke.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [layer addAnimation:stroke forKey:nil];
+    
+    CABasicAnimation *fill = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+    fill.fromValue = @(0);
+    fill.toValue = @(1);
+    fill.repeatCount = 1;
+    fill.duration = 1.0f;
+    fill.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    [layer addAnimation:fill forKey:nil];
 
 }
 
@@ -207,7 +215,7 @@
     CAShapeLayer *shapeLayerFull = [[CAShapeLayer alloc] init];
     [shapeLayerFull setFrame: self.bounds];
     shapeLayerFull.lineWidth = 0.0;
-    [shapeLayerFull setFillColor:[[_strokeColor colorWithAlphaComponent:0.3]CGColor]];
+    [shapeLayerFull setFillColor:[[_strokeColor colorWithAlphaComponent:0.2]CGColor]];
     [shapeLayerFull setPath: [graphPathFull CGPath]];
     [shapeLayerFull setStrokeColor:[[UIColor clearColor] CGColor]];
     [shapeLayerFull setMasksToBounds:YES];
@@ -218,7 +226,7 @@
         CABasicAnimation *fillColorAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
         fillColorAnimation.duration = 1.0f;
         fillColorAnimation.fromValue = (id)[[UIColor clearColor] CGColor];
-        fillColorAnimation.toValue = (id)[[_strokeColor colorWithAlphaComponent:0.3]CGColor];
+        fillColorAnimation.toValue = (id)[[_strokeColor colorWithAlphaComponent:0.2]CGColor];
         fillColorAnimation.repeatCount = 0;
         fillColorAnimation.autoreverses = false;
         [shapeLayerFull addAnimation:fillColorAnimation forKey:@"fillColor"];

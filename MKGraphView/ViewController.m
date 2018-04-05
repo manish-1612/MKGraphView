@@ -22,7 +22,7 @@
     MKGraph *graph = [[MKGraph alloc]initWithFrame:CGRectMake(10.0, 100.0, self.view.frame.size.width - 20.0, 200.0)]  ;
     graph.backgroundColor = [UIColor clearColor];
     graph.strokeWidth = 2.0;
-    graph.strokeColor = [UIColor orangeColor];
+    graph.strokeColor = [UIColor greenColor];
     graph.allowAnimation = true;
     graph.isSolidStroke = false;
     graph.showValuePointsOnGraph = true;
@@ -35,14 +35,14 @@
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(173, 98)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(238, 105)]];
     [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(290, 150)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(310, 155)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(400, 15)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(510, 188)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(550, 201)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(625, 325)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(701, 67)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(800, 89)]];
-    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(805, 222)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(310, 155)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(400, 145)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(510, 188)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(550, 201)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(625, 325)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(701, 67)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(800, 89)]];
+//    [graph.arrayForValues addObject: [NSValue valueWithCGPoint: CGPointMake(805, 222)]];
 
     [self.view addSubview:graph];
 
