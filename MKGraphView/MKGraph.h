@@ -24,6 +24,7 @@
 @property (nonatomic) BOOL allowAnimation;
 @property (nonatomic) BOOL isSolidStroke;
 @property (nonatomic) BOOL showValuePointsOnGraph;
+@property (nonatomic) BOOL setFillColor;
 
 -(id)initWithFrame:(CGRect)frame;
 -(void)drawGraph;
